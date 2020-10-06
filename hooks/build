@@ -1,0 +1,30 @@
+#!/bin/bash
+set -ex
+
+if [ "$DOCKER_TAG" == "latest" ]; then
+    UVERSION=20.04
+else
+    UVERSION=${DOCKER_TAG}
+    case $UVERSION in
+        18.04)
+            UNAME=bionic
+            ;;
+        18.10)
+            UNAME=cosmic
+            ;;
+        19.04)
+            UNAME=disco
+            ;;
+        19.10)
+            UNAME=eoan
+            ;;
+        20.04)
+            UNAME=focal
+            ;;
+        20.10)
+            UNAME=groovy
+            ;;
+    esac
+fi
+
+docker build --build-arg UVERSION=$UVERSION --build-arg UNAME=$UNAME -f $DOCKERFILE_PATH -t $IMAGE_NAME .

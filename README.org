@@ -1,0 +1,3 @@
+
+*  docker-ci-test
+  This is a docker image useful for ci-testing (and building).
