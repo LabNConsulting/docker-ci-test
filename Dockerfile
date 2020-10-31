@@ -22,7 +22,6 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         bash-completion \
         bison \
         bridge-utils \
-        bsdtar \
         build-essential \
         clang \
         clang-9 \
@@ -55,7 +54,6 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         python \
         python-cffi \
         python-dev \
-        python-pip \
         python3 \
         python3-cffi \
         python3-dev \
@@ -95,7 +93,6 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         libboost-all-dev \
         libconfuse-dev \
         libffi-dev \
-        libffi6 \
         libmbedtls-dev \
         libnuma-dev \
         libmnl-dev \
@@ -105,13 +102,26 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         pkg-config \
         python-all \
         python-dev \
-        python-pip \
-        python-virtualenv \
         python3-all \
         python3-jsonschema \
         python3-ply \
         python3-setuptools \
         uuid-dev \
+        # For FRR build
+        bison \
+        flex \
+        install-info \
+        libc-ares-dev \
+        libcap-dev \
+        libjson-c-dev \
+        libpam0g-dev \
+        libreadline-dev \
+        libsnmp-dev \
+        libsystemd-dev \
+        perl \
+        python-ipaddress \
+        python3-sphinx \
+        texinfo \
         && \
     echo en_US.UTF-8 UTF-8 >> /etc/locale.gen && \
     locale-gen && \
@@ -123,3 +133,7 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         pytest pyyaml remarshal tox twine wheel && \
     # Install MIBs
     apt-get install -y snmp-mibs-downloader && download-mibs
+
+RUN echo "Versions $(lsb_release -rs)"
+RUN if [ "$(lsb_release -rs)" = "18.04" ]; then DEBIAN_FRONTEND=noninteractive apt-get install -y bsdtar python-pip libffi6 python-virtualenv; fi
+RUN if [ "$(lsb_release -rs)" = "20.04" ]; then DEBIAN_FRONTEND=noninteractive apt-get install -y libarchive-tools; fi
