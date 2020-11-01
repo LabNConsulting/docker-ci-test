@@ -8,8 +8,6 @@ ENV LANG=en_US.UTF-8 \
     LC_CTYPE="en_US.UTF-8"
 
 ARG UNAME
-ARG LIBYANGVERSION=1.0.167
-ARG SYSREPOVERSION=1.4.66
 
 RUN apt-get update -qy && apt-get dist-upgrade -y && \
     # Add docker.
@@ -146,19 +144,21 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         cffi coverage cryptography docker                lxml nose       pylint pysnmp \
         pytest pyyaml remarshal tox twine wheel && \
     # Install MIBs
-        apt-get install -y snmp-mibs-downloader && download-mibs && \
-    # Install libyang
-    curl -o libyang-$LIBYANGVERSION.tgz -L https://github.com/CESNET/libyang/tarball/v$LIBYANGVERSION && \
+    apt-get install -y snmp-mibs-downloader && download-mibs
+
+# Install libyang and sysrepo
+ARG LIBYANGVERSION=1.0.167
+ARG SYSREPOVERSION=1.4.66
+RUN curl -o libyang-$LIBYANGVERSION.tgz -L https://github.com/CESNET/libyang/tarball/v$LIBYANGVERSION && \
     mkdir -p $LIBYANGVERSION/build && \
-    tar -C $LIBYANGVERSION --strip-components=1 -xf ../libyang-$LIBYANGVERSION.tgz && \
+    tar -C $LIBYANGVERSION --strip-components=1 -xf libyang-$LIBYANGVERSION.tgz && \
     cd $LIBYANGVERSION/build && \
     cmake -DGEN_LANGUAGE_BINDINGS=ON -DENABLE_LYD_PRIV=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr \
         -D CMAKE_BUILD_TYPE:String="Release" .. && \
     make && make install && \
-    # Install sysrepo
     curl -o sysrepo-$SYSREPOVERSION.tgz -L https://github.com/sysrepo/sysrepo/tarball/v$SYSREPOVERSION && \
     mkdir -p $SYSREPOVERSION/build && \
-    tar -C $SYSREPOVERSION --strip-components=1 -xf ../sysrepo-$SYSREPOVERSION.tgz && \
+    tar -C $SYSREPOVERSION --strip-components=1 -xf sysrepo-$SYSREPOVERSION.tgz && \
     cd $SYSREPOVERSION/build && \
     cmake -DCMAKE_BUILD_TYPE=Release -DGEN_LANGUAGE_BINDINGS=ON .. && \
     make && make install
