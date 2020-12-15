@@ -124,6 +124,10 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         perl \
         protobuf-c-compiler \
         python-ipaddress \
+        python3-attr \
+        python3-pluggy \
+        python3-py \
+        python3-pytest \
         python3-sphinx \
         texinfo \
         # For libyang build
