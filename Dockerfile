@@ -133,11 +133,12 @@ RUN apt-get update -qy && apt-get dist-upgrade -y && \
         # For libyang build
         libpcre3-dev \
         # For libyang and sysrepo
+        libpcre2-dev \
         swig \
         && \
     groupadd -r -g 92 frr && \
     groupadd -r -g 85 frrvty && \
-    adduser --system --ingroup frr --home /var/run/frr --gecos "FRR suite" --shell /sbin/nologin frr && \
+    adduser -u 211 --system --ingroup frr --home /var/run/frr --gecos "FRR suite" --shell /sbin/nologin frr && \
     usermod -a -G frrvty frr && \
     echo en_US.UTF-8 UTF-8 >> /etc/locale.gen && \
     locale-gen && \
@@ -169,3 +170,8 @@ RUN curl -o libyang-$LIBYANGVERSION.tgz -L https://github.com/CESNET/libyang/tar
 
 RUN if [ "$(lsb_release -rs)" = "18.04" ]; then DEBIAN_FRONTEND=noninteractive apt-get install -y bsdtar python-pip libffi6 python-virtualenv; fi
 RUN if [ "$(lsb_release -rs)" = "20.04" ]; then DEBIAN_FRONTEND=noninteractive apt-get install -y libarchive-tools; fi
+
+RUN mkdir -p /etc/frr && chown frr:frr /etc/frr && chmod 775 /etc/frr && \
+    mkdir -p /var/run/frr  && chown frr:frr /var/run/frr && chmod 775 /var/run/frr && \
+    mkdir -p /lib/frr/modules  && chown frr:frr /lib/frr/modules && chmod 775 /lib/frr/modules && \
+    mkdir -p /share/doc/frr/examples && chown frr:frr /share/doc/frr/examples && chmod 775 /share/doc/frr/examples
