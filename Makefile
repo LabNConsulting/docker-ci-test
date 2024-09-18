@@ -8,6 +8,9 @@ define build-rule
 	DOCKER_TAG=$(1) IMAGE_NAME=$(IMAGE_BASE):$(1) hooks/build
 endef
 
+build-2404:
+	$(call build-rule,24.04)
+
 build-2004:
 	$(call build-rule,20.04)
 
