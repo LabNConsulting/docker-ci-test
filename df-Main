@@ -1,7 +1,7 @@
 # -*- Dockerfile -*-
 ARG UVERSION
 FROM ubuntu:$UVERSION
-MAINTAINER Christian Hopps <chopps@labn.net>
+LABEL org.opencontainers.image.authors="Christian Hopps <chopps@labn.net>"
 
 ENV LANG=en_US.UTF-8 \
     LC_ALL="en_US.UTF-8" \

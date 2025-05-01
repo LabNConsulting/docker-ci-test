@@ -5,7 +5,7 @@ export DOCKERFILE_PATH := $(MAKEDIR)/Dockerfile
 export IMAGE_BASE := labn/docker-ci-test
 
 define build-rule
-	DOCKER_TAG=$(1) IMAGE_NAME=$(IMAGE_BASE):$(1) hooks/build
+	DOCKER_TAG=$(1) IMAGE_NAME=$(IMAGE_BASE):$(1) DOCKER_EXTRA_ARGS=${DOCKER_EXTRA_ARGS} hooks/build
 endef
 
 build-2404:

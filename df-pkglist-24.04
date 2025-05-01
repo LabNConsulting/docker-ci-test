@@ -1,5 +1,5 @@
 # -*- Dockerfile -*-
-# List of packages needed for Ubuntu 20.04
+# List of packages needed for Ubuntu 24.04
 
 #
 # developer tools
@@ -38,6 +38,7 @@ ARG _PKGLIST_DEV="\
         net-tools \
         netcat-openbsd \
         pciutils \
+	pv \
         python3 \
         python3-cffi \
         python3-dev \
@@ -67,6 +68,7 @@ ARG _PKGLIST_VPP="\
 	chrpath \
 	clang \
 	clang-format \
+	clang-format-15 \
 	cmake \
 	cscope \
 	curl \
@@ -96,6 +98,8 @@ ARG _PKGLIST_VPP="\
 	libssl-dev \
 	libtool \
 	libunwind-dev \
+	llvm \
+	meson \
 	nasm \
 	ninja-build \
 	pkg-config \
@@ -157,6 +161,8 @@ ARG _PKGLIST_FORMERPIP="\
 	python3-nose \
 	python3-pysnmp4 \
 	python3-pytest \
+	python3-scapy \
+	python3-six \
 	python3-wheel \
 	python3-yaml"
 
