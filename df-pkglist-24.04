@@ -69,6 +69,7 @@ ARG _PKGLIST_VPP="\
 	clang \
 	clang-format \
 	clang-format-15 \
+	clang-format-19 \
 	cmake \
 	cscope \
 	curl \
